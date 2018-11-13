@@ -45,7 +45,7 @@ services:
     - SERVICE_NAME=service-v1
   service-v2:
     image: rickalon/messagecanary
-    build: message-v2/
+    #build: message-v2/
     ports:
       - 80
     deploy:
