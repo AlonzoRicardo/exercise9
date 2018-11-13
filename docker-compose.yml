@@ -48,8 +48,8 @@ services:
     environment:
     - SERVICE_NAME=service-v1
   service-v2:
-    image: exercise9_service-v2
-    #build: message-v2/
+    #image: exercise9_service-v2
+    build: message-v2/
     ports:
       - 80
     deploy:

@@ -7,7 +7,7 @@ const random = n => Math.floor(Math.random() * Math.floor(n));
 module.exports = function(msgData, done) {
   const entireMsg = msgData;
   const body = JSON.stringify(msgData.job);
-  let wasSuccesful;
+  msgData.isThereBalance
   if (msgData.isThereBalance) {
     const postOptions = {
       // host: "exercise6_messageapp_1",
@@ -86,5 +86,4 @@ module.exports = function(msgData, done) {
   } else {
     debugError("No credit error");
   }
-  return wasSuccesful;
 };

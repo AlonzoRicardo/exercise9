@@ -3,5 +3,5 @@ let queue = require('../../../messagesIndex');
 const sendMessage = require("../../controllers/sendMessage");
 
 queue.process("save&send", function(job, done) {
-    sendMessage(job, done);
+    sendMessage(job.data, done);
 });
