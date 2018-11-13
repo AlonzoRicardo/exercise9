@@ -1,5 +1,117 @@
 version: "3"
 services:
+  service-v1:
+    hostname: message-v1
+    build: message/
+    ports:
+      - "9007:9007"
+    links:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+      - credit
+    depends_on:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+    
+#  message2:
+#    hostname: message2
+#    build: message/
+#    ports:
+#      - "9009:9007"
+#    links:
+#      - messageapp
+#      - mongodb_message
+#      - replica_message
+#      - redis
+#      - credit
+#    depends_on:
+#      - messageapp
+#      - mongodb_message
+#      - replica_message
+#      - redis
+#
+#  message3:
+#    hostname: message3
+#    build: message/
+#    ports:
+#      - "9010:9007"
+#    links:
+#      - messageapp
+#      - mongodb_message
+#      - replica_message
+#      - redis
+#      - credit
+#    depends_on:
+#      - messageapp
+#      - mongodb_message
+#      - replica_message
+#      - redis
+  credit:
+    build: credit/
+    ports:
+      - "9008:9008"
+    links:
+      - mongodb_credit
+      - replica_credit
+      - redis
+    depends_on:
+      - mongodb_credit
+      - replica_credit
+      - redis
+
+  messageapp:
+    image: cabify/backend-bootcamp-messageapp
+    ports:
+      - "3000:3000"
+
+  mongodb_credit:
+    image: mongo
+    command: mongod --port 27037
+    volumes:
+      - ./credit/data/db:/credit/data/db
+    ports:
+      - 27037:27037
+  replica_credit:
+    image: mongo
+    command: mongod --port 27038
+    volumes:
+      - ./credit/data/replica:/credit/data/replica
+    ports:
+      - 27038:27038
+
+  mongodb_message:
+    image: mongo
+    command: mongod --port 27017
+    volumes:
+      - ./message/data/db:/message/data/db
+    ports:
+      - 27017:27017
+  replica_message:
+    image: mongo
+    command: mongod --port 27018
+    volumes:
+      - ./message/data/replica:/message/data/replica
+    ports:
+      - 27018:27018
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data/redis:/data/redis
+  #haproxy:
+  #  image: haproxy
+  #  build: haproxy/
+  #  ports:
+  #    - 80:80
+  #  expose:
+  #    - 80
+  #############################
   registrator:
     image: gliderlabs/registrator
     volumes:
@@ -9,19 +121,21 @@ services:
       - consul
     links:
       - consul
-  
+  #############################
   consul: 
     image: consul
     command: "agent -server -bootstrap -ui -client=0.0.0.0 -bind='{{ GetPrivateIP }}'"
-
+  #############################
   balancer:
     image: haproxy:1.8-alpine
     depends_on:
       - registrator
     links:
       - registrator
-    volumes: 
+    volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     ports:
       - 48151:48151
-
+  
+ 
+    
