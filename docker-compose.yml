@@ -9,13 +9,9 @@ services:
       - consul
     links:
       - consul
-
-  #############################
   consul: 
     image: consul
     command: "agent -server -bootstrap -ui -client=0.0.0.0 -bind='{{ GetPrivateIP }}'"
-  
-  #############################
   balancer:
     image: haproxy:1.8-alpine
     depends_on:
@@ -26,7 +22,6 @@ services:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     ports:
       - 48151:48151
-  #############################
   service-v1:
     build: message-v1/
     ports:
@@ -49,7 +44,7 @@ services:
     - PORT=9007
     - SERVICE_NAME=service-v1
   service-v2:
-    #image: exercise9_service-v2
+    image: exercise9_service-v2
     build: message-v2/
     ports:
       - 80
