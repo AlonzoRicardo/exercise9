@@ -28,7 +28,6 @@ services:
       - 48151:48151
   #############################
   service-v1:
-    hostname: service-v1
     build: message-v1/
     ports:
       - 80
@@ -47,9 +46,9 @@ services:
       - replica_message
       - redis
     environment:
+    - PORT=9007
     - SERVICE_NAME=service-v1
   service-v2:
-    hostname: service-v2
     #image: exercise9_service-v2
     build: message-v2/
     ports:
@@ -69,6 +68,7 @@ services:
       - replica_message
       - redis
     environment:
+    - PORT=9007
     - SERVICE_NAME=service-v2
   credit:
     build: credit/

@@ -1,3 +1,4 @@
+require('dotenv').config()
 const http = require("http");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -72,6 +73,6 @@ app.use(function(err, req, res, next) {
   }
 });
 
-app.listen(9007, function() {
+app.listen(process.env.PORT, function() {
   console.log("Message App started on PORT 9007");
 });
