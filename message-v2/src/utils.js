@@ -1,5 +1,7 @@
 const debug = require("debug")("util");
 const sendMessage = require("./controllers/sendMessage");
+const os = require("os");
+const hostname = os.hostname();
 
 function cleanClone(document) {
   const copy = Object.assign({}, document._doc);
@@ -9,8 +11,6 @@ function cleanClone(document) {
 }
 
 function getHostName(req, res) {
-  let os = require("os");
-  let hostname = os.hostname();
   debug("Health Check 200");
   res.send(hostname);
 }
@@ -20,11 +20,12 @@ function reEnqueueSend(job) {
 }
 
 function getApiVersion(req, res) {
-  res.send("service-v1");
+  res.send(`service-v2 - ${hostname}`);
 }
 
 module.exports = {
   cleanClone,
   getHostName,
-  reEnqueueSend
+  reEnqueueSend,
+  getApiVersion
 };
