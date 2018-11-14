@@ -2,16 +2,10 @@ data
 
 node_modules
 
-try
-
 .vscode
-
-solution_exercise5
 
 message
 
 message-v2
-
-haproxy
 
 .env

@@ -19,7 +19,7 @@ services:
     links:
       - registrator
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     ports:
       - 48151:48151
   service-v1:
@@ -44,7 +44,7 @@ services:
     - PORT=9007
     - SERVICE_NAME=service-v1
   service-v2:
-    image: rickalon/messagecanary
+    image: rickalon/messagecanary:canary-for-message-service
     #build: message-v2/
     ports:
       - 80
